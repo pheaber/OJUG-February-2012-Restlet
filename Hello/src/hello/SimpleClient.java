@@ -2,18 +2,16 @@ package hello;
 
 import java.io.IOException;
 
-import org.restlet.Client;
-import org.restlet.data.Protocol;
+import org.restlet.resource.ClientResource;
 
 /**
- * Based on example written by Brian Sletten.
+ * Example from Restlet Introduction.
  * 
- * http://www.javaworld.com/javaworld/jw-12-2008/jw-12-rest-series-2.html
+ * http://wiki.restlet.org/docs_2.0/13-restlet/21-restlet/318-restlet/320-restlet.html
  */
 public class SimpleClient {
     public static void main(String [] args) throws IOException {
-        String uri = (args.length > 0) ? args[0] : "http://localhost:8182" ;
-        Client client = new Client(Protocol.HTTP);
-        client.get(uri).getEntity().write(System.out);
+        // Outputting the content of a Web page
+        new ClientResource("http://localhost:8182/").get().write(System.out);
     }
 }

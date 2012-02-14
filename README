@@ -2,3 +2,9 @@ This is the source for the presentation at the Omaha Java User Group (OJUG) by P
 
 The presentation materials are available at:
 https://docs.google.com/presentation/d/14o6JlWHmgpC7UcjPpqj1IANrFn8JW0WFEJGLSYKnFmw/edit
+
+Code was written using Restlet JSE 2.0.10 distribution.
+
+Hello: Simple "hello world" using Restlet. Creates small server and client applications.
+
+Stutter: Simple Twitter clone.

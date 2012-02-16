@@ -17,8 +17,9 @@ public class SimpleServerResource extends ServerResource {
         new Server(Protocol.HTTP, 8182, SimpleServerResource.class).start();
     }
 
-    @Override
+    // tell Restlet to use this method to service any GET requests
     @Get
+    @Override
     public String toString() {
         return "hello, world";
     }

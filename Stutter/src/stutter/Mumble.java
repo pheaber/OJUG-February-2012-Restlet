@@ -11,14 +11,26 @@ public class Mumble {
 
     private final String message;
 
-    public Mumble(User user, String message) {
-        this.id = IdGenerator.generateId();
+    /* package */Mumble(String id, User user, String message) {
+        this.id = id;
         this.user = user;
         this.message = message;
     }
 
+    public Mumble(User user, String message) {
+        this(IdGenerator.generateId(), user, message);
+    }
+
     public String getId() {
         return this.id;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public String getMessage() {
+        return this.message;
     }
 
     @Override
@@ -38,6 +50,7 @@ public class Mumble {
         Mumble other = (Mumble) obj;
 
         EqualsBuilder equals = new EqualsBuilder();
+        equals.append(this.id, other.id);
         equals.append(this.user, other.user);
         equals.append(this.message, other.message);
 
@@ -48,8 +61,7 @@ public class Mumble {
     public int hashCode() {
         HashCodeBuilder hash = new HashCodeBuilder(7, 19);
 
-        hash.append(this.user);
-        hash.append(this.message);
+        hash.append(this.id);
 
         return hash.toHashCode();
     }

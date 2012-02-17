@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class UserTest {
 
-    private static final String TEST_USERNAME = "dreadPirateRoberts";
+    private static final String TEST_USERNAME = "farmBoy";
 
     private static final String TEST_EMAIL = "westley@asyouwish.fl";
 

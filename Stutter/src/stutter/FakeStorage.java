@@ -1,5 +1,6 @@
 package stutter;
 
+import java.util.List;
 import java.util.Map;
 
 public class FakeStorage {
@@ -8,9 +9,13 @@ public class FakeStorage {
 
     private final Map<String, Mumble> mumbleStorage;
 
-    /* package */FakeStorage(Map<String, User> userStorage, Map<String, Mumble> mumbleStorage) {
+    private final List<Mumble> mumbleTimeline;
+
+    /* package */FakeStorage(Map<String, User> userStorage, Map<String, Mumble> mumbleStorage,
+            List<Mumble> mumbleTimeline) {
         this.userStorage = userStorage;
         this.mumbleStorage = mumbleStorage;
+        this.mumbleTimeline = mumbleTimeline;
     }
 
     public void addUser(User user) {
@@ -36,15 +41,25 @@ public class FakeStorage {
     }
 
     public void newMumble(String username, String message) {
+        User user = this.userStorage.get(username);
 
+        // TODO: what if user doesn't exist?
+
+        Mumble newMumble = new Mumble(user, message);
+        user.addMumble(newMumble);
+        this.mumbleStorage.put(newMumble.getId(), newMumble);
+        this.mumbleTimeline.add(newMumble);
     }
 
     public Mumble getMumble(String mumbleId) {
-        return null;
+        return this.mumbleStorage.get(mumbleId);
     }
 
     public void removeMumble(String mumbleId) {
+        // TODO: handle if mumble doesn't exist!
 
+        Mumble removedMumble = this.mumbleStorage.remove(mumbleId);
+        this.mumbleTimeline.remove(removedMumble);
     }
 
 }

@@ -13,6 +13,6 @@ public interface MumbleListManager {
     List<Mumble> listAll();
 
     @Post
-    void newMumble(String username, String message);
+    void newMumble(Mumble newMumble);
 
 }

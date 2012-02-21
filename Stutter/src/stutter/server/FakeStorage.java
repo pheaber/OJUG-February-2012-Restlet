@@ -20,17 +20,17 @@ public class FakeStorage {
     private static final FakeStorage INSTANCE = new FakeStorage(new ConcurrentHashMap<String, User>(),
             new ConcurrentHashMap<String, Mumble>(), new CopyOnWriteArrayList<Mumble>());
 
-    // TODO: remove me!!
-    static {
-        User westley = new User("farmBoy", "westley@asyouwish.fl", "Westley");
-        INSTANCE.addUser(westley);
-        INSTANCE.newMumble("farmBoy", "As you wish.");
-
-        User inigo = new User("inigoSeeksRevenge", "inigo.montoya@revengeismybusiness.fl", "Inigo Montoya");
-        INSTANCE.addUser(inigo);
-        INSTANCE.newMumble("inigoSeeksRevenge",
-                "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.");
-    }
+    // handy helper to preload some data
+    // static {
+    // User westley = new User("farmBoy", "westley@asyouwish.fl", "Westley");
+    // INSTANCE.addUser(westley);
+    // INSTANCE.newMumble("farmBoy", "As you wish.");
+    //
+    // User inigo = new User("inigoSeeksRevenge", "inigo.montoya@revengeismybusiness.fl", "Inigo Montoya");
+    // INSTANCE.addUser(inigo);
+    // INSTANCE.newMumble("inigoSeeksRevenge",
+    // "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.");
+    // }
 
     public static FakeStorage getInstance() {
         return INSTANCE;
@@ -70,7 +70,12 @@ public class FakeStorage {
     public void removeUser(String username) {
         // TODO: handle if user doesn't exist!
 
-        this.userStorage.remove(username);
+        User removeUser = this.userStorage.remove(username);
+
+        for (Mumble mumble : removeUser.getMumbles()) {
+            this.mumbleStorage.remove(mumble.getId());
+            this.mumbleTimeline.remove(mumble);
+        }
     }
 
     public void newMumble(String username, String message) {

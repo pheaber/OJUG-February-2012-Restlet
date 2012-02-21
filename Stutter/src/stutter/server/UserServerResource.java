@@ -24,7 +24,6 @@ public class UserServerResource extends ServerResource implements UserManager {
         return FakeStorage.getInstance().getUser(this.username);
     }
 
-    // TODO: FIX THIS
     @Override
     public void updateUser(User user) {
         FakeStorage.getInstance().updateUser(user);

@@ -83,6 +83,24 @@ public class FakeStorageTest {
     }
 
     @Test
+    public void removeUserAlsoRemovesMumbles() {
+        // add in the test data
+        User testUser = new User(TEST_USERNAME, TEST_EMAIL_ADDRESS);
+        this.userStorage.put(TEST_USERNAME, testUser);
+        Mumble testMumble = MumbleTestUtil.buildMumble(TEST_MUMBLE_ID, testUser, TEST_MESSAGE);
+        testUser.addMumble(testMumble);
+        this.mumbleStorage.put(TEST_MUMBLE_ID, testMumble);
+        this.mumbleTimeline.add(testMumble);
+
+        this.storage.removeUser(TEST_USERNAME);
+
+        // make sure it's gone
+        assertTrue("Didn't remove user!", this.userStorage.isEmpty());
+        assertTrue("Didn't remove from mumble storage!", this.mumbleStorage.isEmpty());
+        assertTrue("Didn't remove from mumble timeline!", this.mumbleTimeline.isEmpty());
+    }
+
+    @Test
     public void newMumble() {
         // add in the test data
         this.userStorage.put(TEST_USERNAME, TEST_USER);

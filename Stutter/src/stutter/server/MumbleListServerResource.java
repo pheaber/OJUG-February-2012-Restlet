@@ -9,15 +9,15 @@ import stutter.common.MumbleListManager;
 
 public class MumbleListServerResource extends ServerResource implements MumbleListManager {
 
+    // TODO: Fix for Client!
     @Override
     public List<Mumble> listAll() {
         return FakeStorage.getInstance().listMumbles();
     }
 
-    // TODO: FIX THIS
     @Override
-    public void newMumble(String username, String message) {
-        FakeStorage.getInstance().newMumble(username, (String) getRequestAttributes().get("message"));
+    public void newMumble(Mumble newMumble) {
+        FakeStorage.getInstance().newMumble(newMumble.getUsername(), newMumble.getMessage());
     }
 
 }

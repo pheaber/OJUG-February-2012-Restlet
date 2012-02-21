@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class User {
 
@@ -109,7 +110,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User=" + this.username;
+        ToStringBuilder string = new ToStringBuilder(this);
+        string.append("username", this.username);
+        string.append("emailAddress", this.emailAddress);
+        string.append("name", this.name);
+        return string.build();
     }
 
 }

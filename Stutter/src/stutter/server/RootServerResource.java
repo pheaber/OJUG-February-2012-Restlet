@@ -7,7 +7,7 @@ public class RootServerResource extends ServerResource {
 
     @Get
     public String welcome() {
-        return "hello";
+        return "hello, this should probably have real stuff in it";
     }
 
 }

@@ -15,6 +15,8 @@ public class Mumble {
 
     private String message;
 
+    private String reference;
+
     // just here to make Jackson happy
     @SuppressWarnings("unused")
     private Mumble() {
@@ -69,6 +71,14 @@ public class Mumble {
     @SuppressWarnings("unused")
     private void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getReference() {
+        return this.reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     @Override

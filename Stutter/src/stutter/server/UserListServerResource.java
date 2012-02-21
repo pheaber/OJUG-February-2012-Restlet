@@ -9,7 +9,6 @@ import stutter.common.UserListManager;
 
 public class UserListServerResource extends ServerResource implements UserListManager {
 
-    // TODO: Fix for client!
     @Override
     public Collection<User> listAll() {
         return FakeStorage.getInstance().listUsers();

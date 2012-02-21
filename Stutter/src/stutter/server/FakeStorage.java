@@ -21,16 +21,16 @@ public class FakeStorage {
             new ConcurrentHashMap<String, Mumble>(), new CopyOnWriteArrayList<Mumble>());
 
     // handy helper to preload some data
-    // static {
-    // User westley = new User("farmBoy", "westley@asyouwish.fl", "Westley");
-    // INSTANCE.addUser(westley);
-    // INSTANCE.newMumble("farmBoy", "As you wish.");
-    //
-    // User inigo = new User("inigoSeeksRevenge", "inigo.montoya@revengeismybusiness.fl", "Inigo Montoya");
-    // INSTANCE.addUser(inigo);
-    // INSTANCE.newMumble("inigoSeeksRevenge",
-    // "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.");
-    // }
+    static {
+        // User westley = new User("farmBoy", "westley@asyouwish.fl", "Westley");
+        // INSTANCE.addUser(westley);
+        // INSTANCE.newMumble("farmBoy", "As you wish.");
+
+        // User inigo = new User("inigoSeeksRevenge", "inigo.montoya@revengeismybusiness.fl", "Inigo Montoya");
+        // INSTANCE.addUser(inigo);
+        // INSTANCE.newMumble("inigoSeeksRevenge",
+        // "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.");
+    }
 
     public static FakeStorage getInstance() {
         return INSTANCE;
@@ -78,7 +78,7 @@ public class FakeStorage {
         }
     }
 
-    public void newMumble(String username, String message) {
+    public Mumble newMumble(String username, String message) {
         User user = this.userStorage.get(username);
 
         // TODO: what if user doesn't exist?
@@ -87,6 +87,8 @@ public class FakeStorage {
         user.addMumble(newMumble);
         this.mumbleStorage.put(newMumble.getId(), newMumble);
         this.mumbleTimeline.add(newMumble);
+
+        return newMumble;
     }
 
     public Mumble getMumble(String mumbleId) {

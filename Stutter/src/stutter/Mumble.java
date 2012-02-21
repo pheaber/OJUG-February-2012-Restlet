@@ -1,36 +1,74 @@
 package stutter;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Mumble {
 
-    private final String id;
+    private String id;
 
-    private final User user;
+    private String username;
 
-    private final String message;
+    private Date time;
 
-    /* package */Mumble(String id, User user, String message) {
-        this.id = id;
-        this.user = user;
-        this.message = message;
+    private String message;
+
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private Mumble() {
     }
 
-    public Mumble(User user, String message) {
-        this(IdGenerator.generateId(), user, message);
+    /* package */Mumble(String id, String user, String message, Date time) {
+        this.id = id;
+        this.username = user;
+        this.message = message;
+        this.time = time;
+    }
+
+    public Mumble(String user, String message) {
+        this(IdGenerator.generateId(), user, message, new Date());
     }
 
     public String getId() {
         return this.id;
     }
 
-    public User getUser() {
-        return this.user;
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Date getTime() {
+        return this.time;
+    }
+
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private void setTime(Date time) {
+        this.time = time;
     }
 
     public String getMessage() {
         return this.message;
+    }
+
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
@@ -51,7 +89,7 @@ public class Mumble {
 
         EqualsBuilder equals = new EqualsBuilder();
         equals.append(this.id, other.id);
-        equals.append(this.user, other.user);
+        equals.append(this.username, other.username);
         equals.append(this.message, other.message);
 
         return equals.isEquals();
@@ -68,7 +106,7 @@ public class Mumble {
 
     @Override
     public String toString() {
-        return this.user.getUsername() + "==>" + this.message;
+        return this.username + "==>" + this.message;
     }
 
 }

@@ -1,4 +1,4 @@
-package stutter;
+package stutter.server;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+
+import stutter.Mumble;
+import stutter.MumbleTestUtil;
+import stutter.User;
 
 public class FakeStorageTest {
 
@@ -92,12 +96,16 @@ public class FakeStorageTest {
         assertEquals("Didn't add new mumble to timeline", 1, this.mumbleTimeline.size());
         final Mumble timelineMumble = this.mumbleTimeline.get(0);
         assertMumbleMatches(TEST_USER, TEST_MESSAGE, timelineMumble);
+
+        // check that mumble was added to the User
+        final List<Mumble> mumbles = TEST_USER.getMumbles();
+        assertEquals("Didn't add mumble to User", 1, mumbles.size());
     }
 
     @Test
     public void getMumble() {
         // add in the test data
-        Mumble testMumble = new Mumble(TEST_MUMBLE_ID, TEST_USER, TEST_MESSAGE);
+        Mumble testMumble = MumbleTestUtil.buildMumble(TEST_MUMBLE_ID, TEST_USER, TEST_MESSAGE);
         this.mumbleStorage.put(TEST_MUMBLE_ID, testMumble);
 
         final Mumble foundMumble = this.storage.getMumble(TEST_MUMBLE_ID);
@@ -109,7 +117,10 @@ public class FakeStorageTest {
     @Test
     public void removeMumble() {
         // add in the test data
-        Mumble testMumble = new Mumble(TEST_MUMBLE_ID, TEST_USER, TEST_MESSAGE);
+        User testUser = new User(TEST_USERNAME, TEST_EMAIL_ADDRESS);
+        this.userStorage.put(TEST_USERNAME, testUser);
+        Mumble testMumble = MumbleTestUtil.buildMumble(TEST_MUMBLE_ID, testUser, TEST_MESSAGE);
+        testUser.addMumble(testMumble);
         this.mumbleStorage.put(TEST_MUMBLE_ID, testMumble);
         this.mumbleTimeline.add(testMumble);
 
@@ -117,21 +128,14 @@ public class FakeStorageTest {
 
         assertTrue("Didn't remove mumble from map!", this.mumbleStorage.isEmpty());
         assertTrue("Didn't remove mumble from timeline!", this.mumbleTimeline.isEmpty());
+        assertTrue("Didn't remove mumble from user!", testUser.getMumbles().isEmpty());
     }
 
     private static void assertMumbleMatches(User expectedUser, String expectedMessage, Mumble testMumble) {
         assertNotNull("Didn't have mumble!", testMumble);
-        final User mumbleUser = testMumble.getUser();
-        assertEquals("Wrong user!", expectedUser, mumbleUser);
+        final String mumbleUsername = testMumble.getUsername();
+        assertEquals("Wrong user!", expectedUser.getUsername(), mumbleUsername);
         assertEquals("Wrong message!", expectedMessage, testMumble.getMessage());
-
-        boolean foundMumbleOnUser = false;
-        for (Mumble mumble : mumbleUser.getMumbles()) {
-            if (testMumble.equals(mumble)) {
-                foundMumbleOnUser = true;
-            }
-        }
-        assertTrue("Mumble wasn't attached to User", foundMumbleOnUser);
     }
 
 }

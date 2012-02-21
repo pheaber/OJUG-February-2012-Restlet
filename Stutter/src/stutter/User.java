@@ -8,13 +8,18 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class User {
 
-    private final String username;
+    private String username;
 
-    private final String emailAddress;
+    private String emailAddress;
 
     private String name;
 
-    private final List<Mumble> mumbles = new ArrayList<Mumble>();
+    private List<Mumble> mumbles = new ArrayList<Mumble>();
+
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private User() {
+    }
 
     public User(String username, String emailAddress) {
         this.username = username;
@@ -38,8 +43,20 @@ public class User {
         return this.username;
     }
 
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getEmailAddress() {
         return this.emailAddress;
+    }
+
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public void addMumble(Mumble mumble) {
@@ -48,6 +65,12 @@ public class User {
 
     public List<Mumble> getMumbles() {
         return this.mumbles;
+    }
+
+    // just here to make Jackson happy
+    @SuppressWarnings("unused")
+    private void setMumbles(List<Mumble> mumbles) {
+        this.mumbles = mumbles;
     }
 
     @Override
